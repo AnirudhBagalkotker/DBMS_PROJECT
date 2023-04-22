@@ -8,20 +8,23 @@ function createNav() {
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav">
-				<li class="nav-item">
-					<a class="nav-link active" aria-current="page" href="#">Home</a>
+				<li class="nav-item profile">
+					<a class="nav-link" aria-current="page" href="/profile">Home</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Add Property</a>
+				<li class="nav-item property">
+					<a class="nav-link" href="/property">Add Property</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Rentals</a>
+				<li class="nav-item rental">
+					<a class="nav-link" href="/rentals">Rentals</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Profile</a>
+				<li class="nav-item report">
+					<a class="nav-link" href="/report">Report</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Logout</a>
+				<li class="nav-item report">
+					<a class="nav-link" href="/adduser">Add User</a>
+				</li>
+				<li class="nav-item logout">
+					<a class="nav-link" href="/logout">Logout</a>
 				</li>
 			</ul>
 		</div>
