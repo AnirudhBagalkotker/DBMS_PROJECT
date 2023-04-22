@@ -20,25 +20,25 @@ app.use(bodyParser.json());
 let staticPath = path.join(__dirname, "public");
 app.use(express.static(staticPath));
 
-//dotenv config
-// dotenv.config({ path: './.env' });
+// dotenv config
+dotenv.config({ path: './.env' });
 
-//db connection
-// const db = mysql.createConnection({
-// 	host: process.env.DATABASE_HOST,
-// 	user: process.env.DATABASE_USER,
-// 	password: process.env.DATABASE_PASS,
-// 	database: process.env.DATABASE
-// })
+// db connection
+const db = mysql.createConnection({
+	host: process.env.DATABASE_HOST,
+	user: process.env.DATABASE_USER,
+	password: process.env.DATABASE_PASS,
+	database: process.env.DATABASE
+})
 
-// db.connect((error) => {
-// 	if (error) {
-// 		console.log(error)
-// 	}
-// 	else {
-// 		console.log("MySQL connected....");
-// 	}
-// })
+db.connect((error) => {
+	if (error) {
+		console.log(error)
+	}
+	else {
+		console.log("MySQL connected....");
+	}
+})
 
 //app port
 app.listen(3000, () => {
