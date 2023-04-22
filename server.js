@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const dotenv = require('dotenv');
 const cookieParser = require("cookie-parser");
+const { promisify } = require("util")
 const jwt = require("jsonwebtoken");
 const mysql = require('mysql');
 const bodyParser = require("body-parser");
@@ -14,11 +15,15 @@ const app = express();
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(bodyParser.json());
 
 // declare static path
 let staticPath = path.join(__dirname, "public");
 app.use(express.static(staticPath));
+express().use(bodyParser.urlencoded({
+	extended: true
+}));
+
+app.use(bodyParser.json());
 
 // dotenv config
 dotenv.config({ path: './.env' });
@@ -46,42 +51,6 @@ app.listen(3000, () => {
 })
 
 //routes
-
-//login screen
-app.get("/login", (req, res) => {
-	res.sendFile(path.join(staticPath, "../views/login.html"));
-});
-
-//rentals screen
-app.get("/rentals", (req, res) => {
-	res.sendFile(path.join(staticPath, "../views/rentals.html"));
-});
-
-//Property screen
-app.get("/property", (req, res) => {
-	res.sendFile(path.join(staticPath, "../views/property.html"));
-});
-
-//profile screen
-app.get("/profile", (req, res) => {
-	res.sendFile(path.join(staticPath, "../views/profile.html"));
-});
-
-//adduser screen
-app.get("/adduser", (req, res) => {
-	res.sendFile(path.join(staticPath, "../views/adduser.html"));
-});
-
-//report screen
-app.get("/report", (req, res) => {
-	res.sendFile(path.join(staticPath, "../views/report.html"));
-});
-
-//logout screen
-app.get("/logout", (req, res) => {
-	res.sendFile(path.join(staticPath, "../views/logout.html"));
-});
-
 
 app.post('/auth/login', async (req, res) => {
 	const phone = req.body.phone;
@@ -129,13 +98,11 @@ app.post('/auth/login', async (req, res) => {
 						const token = jwt.sign({ id: uid, name: name }, process.env.JWT_SECRET, {
 							expiresIn: process.env.JWT_EXPIRES_IN,
 						});
-						// console.log("The Token is " + token);
+						console.log("The Token is " + token);
 						const cookieOptions = {
 							expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
-							httpOnly: true,
 						};
-						res.cookie("log", token, cookieOptions);
-						return res.status(200).redirect("/profile");
+						return res.status(200).cookie("log", token, cookieOptions).redirect("/profile");
 					}
 					else {
 						console.log("Wrong password");
@@ -151,3 +118,91 @@ app.post('/auth/login', async (req, res) => {
 		}
 	);
 });
+
+//login screen
+app.get("/login", (req, res) => {
+	res.sendFile(path.join(staticPath, "../views/login.html"));
+});
+
+//rentals screen
+app.get("/rentals", (req, res) => {
+	if (getUID(req, res)) {
+		res.sendFile(path.join(staticPath, "../views/rentals.html"));
+	}
+	else {
+		res.status(200).redirect("/login");
+	}
+});
+
+//Property screen
+app.get("/property", (req, res) => {
+	if (getUID(req, res)) {
+		res.sendFile(path.join(staticPath, "../views/property.html"));
+	}
+	else {
+		res.status(200).redirect("/login");
+	}
+});
+
+//profile screen
+app.get("/profile", (req, res) => {
+	if (getUID(req, res)) {
+		res.sendFile(path.join(staticPath, "../views/profile.html"));
+	}
+	else {
+		res.status(200).redirect("/login");
+	}
+});
+
+//adduser screen
+app.get("/adduser", (req, res) => {
+	if (getUID(req, res)) {
+		res.sendFile(path.join(staticPath, "../views/adduser.html"));
+	}
+	else {
+		res.status(200).redirect("/login");
+	}
+});
+
+//report screen
+app.get("/report", (req, res) => {
+	if (getUID(req, res)) {
+		res.sendFile(path.join(staticPath, "../views/report.html"));
+	}
+	else {
+		res.status(200).redirect("/login");
+	}
+});
+
+//logout screen
+app.get("/logout", (req, res) => {
+	res.cookie("log", "logout", {
+		expires: new Date(Date.now() + 2 * 1000),
+		httpOnly: true,
+	});
+	res.status(200).redirect("/login");
+});
+
+//uid function
+async function getUID(req, res) {
+	if (req.cookies.log) {
+		console.log(req.cookies.log);
+		try {
+			const decode = await promisify(jwt.verify)(
+				req.cookies.log,
+				process.env.JWT_SECRET
+			);
+			const uid = decode.id;
+			return uid;
+		} catch (error) {
+			console.log(error);
+			res.status(200).redirect('/login');
+		}
+	} else {
+		res.status(200).redirect('/login');
+	}
+};
+
+app.get('/getData/profile', async (req, res) => {
+
+})
