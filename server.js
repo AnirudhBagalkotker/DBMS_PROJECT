@@ -81,3 +81,73 @@ app.get("/report", (req, res) => {
 app.get("/logout", (req, res) => {
 	res.sendFile(path.join(staticPath, "../views/logout.html"));
 });
+
+
+app.post('/auth/login', async (req, res) => {
+	const phone = req.body.phone;
+	const password = req.body.pass;
+
+	db.query(
+		"select * from PHONE where PHONE=?",
+		[phone],
+		(error, result) => {
+			console.log(phone);
+			console.log(result);
+			if (error) {
+				console.log(error);
+				const msg = "Internal Server Error";
+				return res.status(500).send({
+					error: {
+						message: msg
+					}
+				});
+			}
+			if (result.length <= 0) {
+				console.log("Wrong phone");
+				const msg = "Wrong phone";
+				return res.status(400).send({
+					error: {
+						message: msg
+					}
+				});
+			} else {
+				const uid = result[0].UID;
+				console.log(uid);
+				db.query("select * from USER where UID=?", [uid], (error, resu) => {
+					if (error) {
+						console.log(error);
+						const msg = "Internal Server Error";
+						return res.status(500).send({
+							error: {
+								message: msg
+							}
+						});
+					}
+					const pass = resu[0].password;
+					if (pass == password) {
+						const name = resu[0].name;
+						const token = jwt.sign({ id: uid, name: name }, process.env.JWT_SECRET, {
+							expiresIn: process.env.JWT_EXPIRES_IN,
+						});
+						// console.log("The Token is " + token);
+						const cookieOptions = {
+							expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
+							httpOnly: true,
+						};
+						res.cookie("log", token, cookieOptions);
+						return res.status(200).redirect("/profile");
+					}
+					else {
+						console.log("Wrong password");
+						const msg = "Wrong password";
+						return res.status(400).send({
+							error: {
+								message: msg
+							}
+						});
+					}
+				});
+			}
+		}
+	);
+});
