@@ -1,10 +1,8 @@
-const app = require('express');
+const express = require('express');
 const path = require('path');
-const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
-const { promisify } = require("util");
 const mysql = require('mysql');
 const bodyParser = require("body-parser");
 
@@ -23,26 +21,53 @@ let staticPath = path.join(__dirname, "public");
 app.use(express.static(staticPath));
 
 //dotenv config
-dotenv.config({ path: './.env' });
+// dotenv.config({ path: './.env' });
 
 //db connection
-const db = mysql.createConnection({
-	host: process.env.DATABASE_HOST,
-	user: process.env.DATABASE_USER,
-	password: process.env.DATABASE_PASS,
-	database: process.env.DATABASE
-})
+// const db = mysql.createConnection({
+// 	host: process.env.DATABASE_HOST,
+// 	user: process.env.DATABASE_USER,
+// 	password: process.env.DATABASE_PASS,
+// 	database: process.env.DATABASE
+// })
 
-db.connect((error) => {
-	if (error) {
-		console.log(error)
-	}
-	else {
-		console.log("MySQL connected....");
-	}
-})
+// db.connect((error) => {
+// 	if (error) {
+// 		console.log(error)
+// 	}
+// 	else {
+// 		console.log("MySQL connected....");
+// 	}
+// })
 
 //app port
-app.listen(80, () => {
-	console.log('listening on port 80.......');
+app.listen(3000, () => {
+	console.log('listening on port 3000.......');
 })
+
+//routes
+
+//login screen
+app.get("/login", (req, res) => {
+	res.sendFile(path.join(staticPath, "../views/login.html"));
+});
+
+//rentals screen
+app.get("/rentals", (req, res) => {
+	res.sendFile(path.join(staticPath, "../views/rentals.html"));
+});
+
+//Property screen
+app.get("/property", (req, res) => {
+	res.sendFile(path.join(staticPath, "../views/property.html"));
+});
+
+//profile screen
+app.get("/profile", (req, res) => {
+	res.sendFile(path.join(staticPath, "../views/profile.html"));
+});
+
+//logout screen
+app.get("/logout", (req, res) => {
+	res.sendFile(path.join(staticPath, "../views/logout.html"));
+});
