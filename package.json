@@ -1,0 +1,11 @@
+{
+  "name": "dbms_project",
+  "version": "1.0.0",
+  "description": "Property Rental Agency Application",
+  "main": "server.js",
+  "scripts": {
+    "test": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
