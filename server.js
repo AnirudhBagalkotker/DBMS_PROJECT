@@ -67,6 +67,16 @@ app.get("/profile", (req, res) => {
 	res.sendFile(path.join(staticPath, "../views/profile.html"));
 });
 
+//adduser screen
+app.get("/adduser", (req, res) => {
+	res.sendFile(path.join(staticPath, "../views/adduser.html"));
+});
+
+//report screen
+app.get("/report", (req, res) => {
+	res.sendFile(path.join(staticPath, "../views/report.html"));
+});
+
 //logout screen
 app.get("/logout", (req, res) => {
 	res.sendFile(path.join(staticPath, "../views/logout.html"));
