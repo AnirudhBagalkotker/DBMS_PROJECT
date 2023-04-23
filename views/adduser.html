@@ -13,19 +13,23 @@
 <body>
 	<section id="nav"></section>
 
-	<h1 class="m-3 text-center">ADD USER</h1>
+	<h1 class="m-3 text-center">Add User</h1>
 
 	<section id="addUserForm" class="m-auto mt-5 w-50">
 		<form>
 			<div class="mb-3">
-				<label for="usernameField" class="form-label">Phone Number</label>
-				<input type="tel" class="form-control" id="usernameField" name="usernameField">
+				<label for="usernameField" class="form-label">Name</label>
+				<input type="text" class="form-control" id="usernameField" name="usernameField">
+			</div>
+			<div class="mb-3">
+				<label for="phoneField" class="form-label">Phone Number</label>
+				<input type="number" class="form-control" id="phoneField" name="phoneField">
 			</div>
 			<div class="mb-3">
 				<label for="passwordField" class="form-label">Password</label>
 				<input type="password" class="form-control" id="passwordField" name="passwordField">
 			</div>
-			<div class="form-outline">
+			<div class="mb-3">
 				<label class="form-label" for="usernameField">Age</label>
 				<input type="number" id="numberField" class="form-control" />
 			</div>
@@ -33,7 +37,7 @@
 				<label for="usernameField" class="form-label">Address</label>
 				<input type="text" class="form-control" id="addressField" name="addressField">
 			</div>
-			<div class="form-outline">
+			<div class="mb-3">
 				<label class="form-label" for="usernameField">Role</label>
 				<input type="number" id="roleField" class="form-control" />
 			</div>
@@ -41,7 +45,7 @@
 				<label for="usernameField" class="form-label">Aadhar</label>
 				<input type="text" class="form-control" id="aadharField" name="aadharField">
 			</div>
-			<button type="submit" class="btn btn-primary" id="loginBtn">Login</button>
+			<button type="submit" class="btn btn-primary" id="loginBtn">Save</button>
 		</form>
 	</section>
 

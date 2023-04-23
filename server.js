@@ -50,6 +50,14 @@ app.listen(3000, () => {
 	console.log('listening on port 3000.......');
 })
 
+async function getRole(uid) {
+	db.query("select role from USER where UID=?", [uid], (error, result) => {
+		const role = result[0].role;
+		console.log(role);
+		return role;
+	})
+}
+
 //routes
 
 app.post('/auth/login', async (req, res) => {
@@ -60,8 +68,8 @@ app.post('/auth/login', async (req, res) => {
 		"select * from PHONE where PHONE=?",
 		[phone],
 		(error, result) => {
-			console.log(phone);
-			console.log(result);
+			// console.log(phone);
+			// console.log(result);
 			if (error) {
 				console.log(error);
 				const msg = "Internal Server Error";
@@ -81,7 +89,7 @@ app.post('/auth/login', async (req, res) => {
 				});
 			} else {
 				const uid = result[0].UID;
-				console.log(uid);
+				// console.log(uid);
 				db.query("select * from USER where UID=?", [uid], (error, resu) => {
 					if (error) {
 						console.log(error);
@@ -96,10 +104,10 @@ app.post('/auth/login', async (req, res) => {
 					if (pass == password) {
 						const name = resu[0].name;
 						const role = resu[0].role;
-						const token = jwt.sign({ id: uid, name: name, role: role }, process.env.JWT_SECRET, {
+						const token = jwt.sign({ id: uid, name: name }, process.env.JWT_SECRET, {
 							expiresIn: process.env.JWT_EXPIRES_IN,
 						});
-						console.log("The Token is " + token);
+						// console.log("The Token is " + token);
 						const cookieOptions = {
 							expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
 						};
@@ -186,29 +194,24 @@ app.get("/logout", (req, res) => {
 
 app.get('/getData/profile', async (req, res) => {
 	const uid = await getUID(req, res);
-	role = await getRole(req, res);
-	var roleName = "";
-	if (role == 0) {
-		roleName = "Tenant";
-	}
-	else if (role == 1) {
-		roleName = "Owner";
-	}
-	else if (role == 2) {
-		roleName = "Manager";
-	}
-	else if (role == 3) {
-		roleName = "DBA";
-	}
-	console.log(role);
-	console.log(roleName);
 	db.query("SELECT * FROM USER, PHONE WHERE USER.UID = PHONE.UID and USER.UID=?", [uid], (error, result) => {
 		const name = result[0].name;
 		const age = result[0].age;
 		const address = result[0].address;
 		const aadhar = result[0].aadhar;
 		const phone = result[0].Phone;
-		return res.json({ uid, roleName, name, age, address, aadhar, phone });
+		const role = result[0].role;
+		db.query("SELECT * FROM ADDRESS WHERE AID=?", [address], (error, result) => {
+			const add = result[0].Door + ", " + result[0].Street + ", " + result[0].city + ", " + result[0].state;
+			return res.json({ uid, role, name, age, aadhar, phone, add });
+		})
+	})
+})
+
+app.get('/getData/property', async (req, res) => {
+	const uid = await getUID(req, res);
+	db.query("SELECT * FROM PROPERTY, ADDRESS WHERE PROPERTY.Address = ADDRESS.AID and Owner_UID=?", [uid], (error, result) => {
+		return res.json({ result });
 	})
 })
 
@@ -216,7 +219,7 @@ app.get('/getData/profile', async (req, res) => {
 //uid function
 async function getUID(req, res) {
 	if (req.cookies.log) {
-		console.log(req.cookies.log);
+		// console.log(req.cookies.log);
 		try {
 			const decode = await promisify(jwt.verify)(
 				req.cookies.log,
@@ -232,22 +235,3 @@ async function getUID(req, res) {
 		res.status(200).redirect('/login');
 	}
 };
-
-async function getRole(req, res) {
-	if (req.cookies.log) {
-		console.log(req.cookies.log);
-		try {
-			const decode = await promisify(jwt.verify)(
-				req.cookies.log,
-				process.env.JWT_SECRET
-			);
-			role = decode.role;
-			return role;
-		} catch (error) {
-			console.log(error);
-			res.status(200).redirect('/login');
-		}
-	} else {
-		res.status(200).redirect('/login');
-	}
-}
