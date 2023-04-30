@@ -213,6 +213,12 @@ app.get('/getData/property', async (req, res) => {
 	})
 })
 
+app.get('/setData/users', async (req, res) => {
+	db.query("CALL addUser", (error, result) => {
+		return res.status(200).redirect("/");
+	})
+})
+
 //uid function
 async function getUID(req, res) {
 	if (req.cookies.log) {
