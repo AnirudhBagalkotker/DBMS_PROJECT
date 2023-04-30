@@ -38,7 +38,7 @@ VALUES (0, 'DBA'),
   (1, 'MANAGER'),
   (2, 'OWNER'),
   (3, 'TENANT');
-
+  
 CREATE TABLE `PHONE` (
   `Phone` int(11) NOT NULL,
   `UID` int(11) NOT NULL
@@ -61,23 +61,23 @@ create procedure add_full_user (
 BEGIN
 DECLARE MyAdd int(11);
 DECLARE Myuid int(11);
-insert into ADDRESS (Door, Street, city, pin, state)
+insert into ADDRESS (Door, Street, city, pin, state) 
 values (f_door, f_street, f_city, f_pin, f_state);
 
-select a.AID into MyAdd from ADDRESS a
+select a.AID into MyAdd from ADDRESS a 
 where a.Door = f_door
 and a.Street = f_street
 and a.city = f_city
 and a.pin = f_pin
 and a.state = f_state;
 
-insert into USER (name, password, age, address, role, aadhar)
+insert into USER (name, password, age, address, role, aadhar) 
 values (f_name, f_password, f_age, MyAdd, f_role, f_aadhar);
 
-select UID into Myuid from USER u
+select UID into Myuid from USER u 
 where u.address = MyAdd;
 
-insert into PHONE (Phone, UID)
+insert into PHONE (Phone, UID) 
 values (f_phone, Myuid);
 
 END //
@@ -135,7 +135,7 @@ in f_uid int(11),
 in f_avail int(1),
 in f_fac varchar(150),
 in st_date date,
-in en_date date,
+in en_date date, 
 in f_rent int(11),
 in f_hike int(11),
 in f_area int(11),
@@ -152,10 +152,10 @@ in f_state varchar(50)
 )
 BEGIN
 DECLARE MyAdd INT(11);
-insert into ADDRESS (Door, Street, city, pin, state)
+insert into ADDRESS (Door, Street, city, pin, state) 
 values (f_door, f_street, f_city, f_pin, f_state);
 
-select a.AID into MyAdd from ADDRESS a
+select a.AID into MyAdd from ADDRESS a 
 where a.Door = f_door
 and a.Street = f_street
 and a.city = f_city
@@ -173,10 +173,10 @@ call add_full_user('Anirudh', 'Anirudh123', 18, '204', 'Moksha', 'Mohali', 14050
 call add_full_property(1, 1, 'Swimming Pool', '2023-05-01', '2024-01-23', 20000, 20, 1500, 1324, '2021-09-06', 3, 0, 3, 'lala', 'Lalu Nagar', 'Hyderabad', 432111, 'Telangana');
 -- select * from ADDRESS;
 
-ALTER TABLE RENT
+ALTER TABLE RENT 
 ADD COLUMN date_issued date;
 
-ALTER TABLE RENT
+ALTER TABLE RENT 
 MODIFY COLUMN date_issued datetime;
 
 ALTER TABLE RENT
@@ -221,7 +221,7 @@ WHERE p.PID = f_pid;
 select p.start_date, p.end_date into st_date, en_date from PROPERTY p
 WHERE p.PID = f_pid;
 
-INSERT INTO RENT_HISTORY (RID, Start_date, End_date, rent, hike, Commission)
+INSERT INTO RENT_HISTORY (RID, Start_date, End_date, rent, hike, Commission) 
 values(Myrid, st_date, en_date, Mrent, Mhike, f_com);
 
 END IF;
@@ -231,7 +231,7 @@ DELIMITER ;
 
 drop trigger avail_con;
 DELIMITER //
-CREATE TRIGGER avail_con
+CREATE TRIGGER avail_con 
 AFTER INSERT ON RENT FOR EACH ROW
 BEGIN
 DECLARE Mypid int(11);
