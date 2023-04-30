@@ -1,5 +1,3 @@
-create database PRA;
-use PRA;
 DROP TABLE IF EXISTS `ADDRESS`;
 CREATE TABLE `ADDRESS` (
   `AID` int(11) NOT NULL AUTO_INCREMENT,
@@ -10,17 +8,6 @@ CREATE TABLE `ADDRESS` (
   `state` varchar(50) NOT NULL,
   PRIMARY KEY (`AID`)
 );
-DROP TABLE IF EXISTS `ROLE`;
-CREATE TABLE `ROLE` (
-  `RoleId` int(11) NOT NULL,
-  `RoleName` varchar(10) DEFAULT NULL,
-  PRIMARY KEY (`RoleId`)
-);
-INSERT INTO `ROLE`
-VALUES (0, 'DBA'),
-  (1, 'MANAGER'),
-  (2, 'OWNER'),
-  (3, 'TENANT');
 DROP TABLE IF EXISTS `USER`;
 CREATE TABLE `USER` (
   `UID` int(11) NOT NULL AUTO_INCREMENT,
@@ -34,8 +21,19 @@ CREATE TABLE `USER` (
   KEY `role` (`role`),
   CONSTRAINT `USER_ibfk_1` FOREIGN KEY (`role`) REFERENCES `ROLE` (`RoleId`)
 );
+DROP TABLE IF EXISTS `ROLE`;
+CREATE TABLE `ROLE` (
+  `RoleId` int(11) NOT NULL,
+  `RoleName` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`RoleId`)
+);
+INSERT INTO `ROLE`
+VALUES (0, 'DBA'),
+  (1, 'MANAGER'),
+  (2, 'OWNER'),
+  (3, 'TENANT');
 CREATE TABLE `PHONE` (
-  `Phone` bigint(11) NOT NULL,
+  `Phone` int(11) NOT NULL,
   `UID` int(11) NOT NULL
 );
 DELIMITER / / create procedure add_full_user (
@@ -49,7 +47,7 @@ DELIMITER / / create procedure add_full_user (
   in f_state varchar(50),
   in f_role int(11),
   in f_aadhar bigint(12),
-  in f_phone bigint(11)
+  in f_phone int(11)
 ) BEGIN
 DECLARE MyAdd int(11);
 DECLARE Myuid int(11);
@@ -127,7 +125,7 @@ DELIMITER / / CREATE PROCEDURE add_full_property(
   in f_hike int(11),
   in f_area int(11),
   in f_plinth int(11),
-  in f_construction date,
+  in f_construction int(11),
   in f_floors int(11),
   in f_type int(11),
   in f_bhk int(11),
@@ -181,32 +179,6 @@ VALUES (
   );
 END / / DELIMITER;
 -- select * from USER;
-call add_full_user(
-  'Kartik',
-  'kartik123',
-  20,
-  '103',
-  'HUOojs',
-  'Ohio',
-  123456,
-  'States',
-  2,
-  1267,
-  21312
-);
-call add_full_user(
-  'Shantanu',
-  'lifewe',
-  22,
-  '103',
-  'Pandit Wari',
-  'Dehradun',
-  110076,
-  'Uttrakhand',
-  3,
-  27638185362,
-  3891367
-);
 call add_full_property(
   1,
   1,
@@ -217,7 +189,7 @@ call add_full_property(
   20,
   1500,
   1324,
-  '2021-09-23',
+  6,
   3,
   0,
   3,
@@ -234,7 +206,7 @@ ALTER TABLE RENT
 MODIFY COLUMN date_issued datetime;
 ALTER TABLE RENT
 MODIFY date_issued date NOT NULL;
-drop procedure if EXISTS add_rental;
+drop procedure add_rental;
 DELIMITER / / CREATE PROCEDURE add_rental(
   in f_uid int(11),
   in f_pid int(11),
@@ -248,21 +220,17 @@ DECLARE en_date date;
 DECLARE Mav int(1);
 DECLARE Mdt datetime;
 select p.Available into Mav
-from PROPERTY p
+from Property p
 where p.PID = f_pid;
 IF(Mav = 1) THEN
 SET Mdt = current_timestamp();
 INSERT INTO RENT (Tenant, Property, date_issued)
 VALUES (f_uid, f_pid, Mdt);
--- select r.RID into Myrid from RENT r
--- WHERE r.Tenant = f_uid
--- and r.Property = f_pid
--- and r.date_issued = Mdt;
-SELECT (AUTO_INCREMENT -1) INTO Myrid
-FROM information_schema.TABLES
-WHERE TABLE_SCHEMA = "ABCD"
-  AND TABLE_NAME = "RENT";
-select Myrid;
+select r.RID into Myrid
+from RENT r
+WHERE r.Tenant = f_uid
+  and r.Property = f_pid
+  and r.date_issued = Mdt;
 select p.rent into Mrent
 from PROPERTY p
 WHERE p.PID = f_pid;
@@ -297,13 +265,23 @@ WHERE Mypid = p.PID;
 END / / DELIMITER;
 -- select * from user;
 -- select * from property;
--- TRUNCATE TABLE RENT_HISTORY;
--- DELETE FROM RENT
--- where Tenant = 2;
+call add_full_user(
+  'Shantanu',
+  'lifewe',
+  22,
+  '103',
+  'Pandit Wari',
+  'Dehradun',
+  110076,
+  'Uttrakhand',
+  4,
+  27638185362,
+  3891367257
+);
 call add_rental(2, 1, 15);
 -- select * from rent;
 -- select * from rent_history;
 -- truncate table rent;
--- update PROPERTY p
--- set p.Available = 1
+-- update property p
+-- set p.available = 1
 -- where p.pid = 1;
