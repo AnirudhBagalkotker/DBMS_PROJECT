@@ -40,7 +40,7 @@ VALUES (0, 'DBA'),
   (3, 'TENANT');
 
 CREATE TABLE `PHONE` (
-  `Phone` int(11) NOT NULL,
+  `Phone` bigint(10) NOT NULL,
   `UID` int(11) NOT NULL
 );
 
@@ -56,7 +56,7 @@ create procedure add_full_user (
     in f_state varchar(50),
     in f_role int(11),
     in f_aadhar bigint(12),
-    in f_phone int(11)
+    in f_phone bigint(10)
 )
 BEGIN
 DECLARE MyAdd int(11);
@@ -255,3 +255,5 @@ call add_rental(2, 1, 15);
 -- update property p
 -- set p.available = 1
 -- where p.pid = 1;
+
+SET SQL_SAFE_UPDATES = 0;
