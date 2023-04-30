@@ -13,14 +13,14 @@
 <body>
 	<section id="nav"></section>
 
-	<h1 class="m-3 text-center">Properties</h1>
+	<h1 class="m-3 text-center">PROPERTIES</h1>
 
-	<section id="addPropertyForm" class="m-auto mt-5 w-auto">
+	<section id="addPropertyForm" class="m-auto mt-5 mb-5 w-auto text-center">
 		<section id="rentals" class="m-3 w-auto">
 			<table class="table">
 				<thead>
 					<tr>
-						<th scope="col">Owner UID</th>
+						<th scope="col">Owner</th>
 						<th scope="col">Availability</th>
 						<th scope="col">Facilities</th>
 						<th scope="col">Start Date</th>
@@ -34,7 +34,8 @@
 						<th scope="col">Type</th>
 						<th scope="col">BHK</th>
 						<th scope="col">Address</th>
-						<th scope="col">Edit</th>
+						<th scope="col"></th>
+						<th scope="col"></th>
 					</tr>
 				</thead>
 				<tbody id="rowData">
@@ -45,7 +46,7 @@
 										name="owneruidField"></th>
 								<th scope="col"><input type="number" class="form-control w-100" id="availibilityField"
 										name="availibilityField"></th>
-								<th scope="col"><input type="text" class="form-control w-auto" id="facilitiesField"
+								<th scope="col"><input type="text" class="form-control w-100" id="facilitiesField"
 										name="facilitiesField"></th>
 								<th scope="col"><input type="date" class="form-control w-auto" id="startdateField"
 										name="startdateField"></th>
@@ -73,6 +74,10 @@
 										aria-controls="collapseExample">
 										Save
 									</button></th>
+								<th scope="col"><button class="btn btn-danger m-0" type="button" aria-expanded="false"
+										aria-controls="collapseExample">
+										Clear
+									</button></th>
 							</tr>
 						</form>
 					</div>
@@ -96,7 +101,11 @@
 							<th scope="col"><button class="btn btn-primary m-0" type="button" data-bs-toggle="collapse"
 									data-bs-target="#collapseExample" aria-expanded="false"
 									aria-controls="collapseExample">
-									Edit Property
+									Edit
+								</button></th>
+							<th scope="col"><button class="btn btn-danger m-0" type="button" aria-expanded="false"
+									aria-controls="collapseExample">
+									Delete
 								</button></th>
 						</tr>
 						<form>
@@ -155,7 +164,11 @@
 							<th scope="col"><button class="btn btn-primary m-0" type="button" data-bs-toggle="collapse"
 									data-bs-target="#collapseExample" aria-expanded="false"
 									aria-controls="collapseExample">
-									Edit Property
+									Edit
+								</button></th>
+							<th scope="col"><button class="btn btn-danger m-0" type="button" aria-expanded="false"
+									aria-controls="collapseExample">
+									Delete
 								</button></th>
 						</tr>
 						<form>

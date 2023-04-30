@@ -1,22 +1,10 @@
 fetch("/getData/profile")
 	.then(response => response.json())
 	.then(data => {
-		role = data.role;
-		// console.log(role);
-		roleName = "Tenant";
-		if (role == 1) {
-			roleName = "Owner";
-		}
-		else if (role == 2) {
-			roleName = "Manager";
-		}
-		else if (role == 3) {
-			roleName = "DBA";
-		};
 		document.getElementById("name").innerHTML = data.name;
 		document.getElementById("age").innerHTML = data.age;
 		document.getElementById("address").innerHTML = data.add;
-		document.getElementById("role").innerHTML = roleName;
+		document.getElementById("role").innerHTML = data.roleName;
 		document.getElementById("aadhar").innerHTML = data.aadhar;
 		document.getElementById("phone").innerHTML = data.phone;
 	})

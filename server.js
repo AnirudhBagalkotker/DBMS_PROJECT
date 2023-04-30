@@ -50,14 +50,6 @@ app.listen(3000, () => {
 	console.log('listening on port 3000.......');
 })
 
-async function getRole(uid) {
-	db.query("select role from USER where UID=?", [uid], (error, result) => {
-		const role = result[0].role;
-		console.log(role);
-		return role;
-	})
-}
-
 //routes
 
 app.post('/auth/login', async (req, res) => {
@@ -153,8 +145,8 @@ app.get("/property", (req, res) => {
 	}
 });
 
-//profile screen
-app.get("/profile", (req, res) => {
+//profile/home screen
+app.get(["/profile", "/", "/home"], (req, res) => {
 	if (getUID(req, res)) {
 		res.sendFile(path.join(staticPath, "../views/profile.html"));
 	}
@@ -203,7 +195,10 @@ app.get('/getData/profile', async (req, res) => {
 		const role = result[0].role;
 		db.query("SELECT * FROM ADDRESS WHERE AID=?", [address], (error, result) => {
 			const add = result[0].Door + ", " + result[0].Street + ", " + result[0].city + ", " + result[0].state;
-			return res.json({ uid, role, name, age, aadhar, phone, add });
+			db.query("SELECT RoleName FROM ROLE WHERE RoleId=?", [role], (error, result) => {
+				const roleName = result[0].RoleName;
+				return res.json({ uid, roleName, name, age, aadhar, phone, add });
+			})
 		})
 	})
 })
@@ -214,7 +209,6 @@ app.get('/getData/property', async (req, res) => {
 		return res.json({ result });
 	})
 })
-
 
 //uid function
 async function getUID(req, res) {
@@ -235,3 +229,14 @@ async function getUID(req, res) {
 		res.status(200).redirect('/login');
 	}
 };
+
+async function getRole(req, res) {
+	const uid = getUID(req, res);
+	db.query("select role from USER where UID=?", [uid], (error, result) => {
+		role = result[0].role;
+		db.query("SELECT RoleName FROM ROLE WHERE RoleId=?", [role], (error, result) => {
+			const roleName = result[0].RoleName;
+			return res.json({ roleName });
+		})
+	})
+}
