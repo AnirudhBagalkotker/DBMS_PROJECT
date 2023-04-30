@@ -1,16 +1,5 @@
-fetch("/getData/profile")
-	.then(response => response.json())
-	.then(data => {
-		document.getElementById("name").innerHTML = data.name;
-		document.getElementById("age").innerHTML = data.age;
-		document.getElementById("address").innerHTML = data.add;
-		document.getElementById("role").innerHTML = data.roleName;
-		document.getElementById("aadhar").innerHTML = data.aadhar;
-		document.getElementById("phone").innerHTML = data.phone;
-	})
-
 fetch("/getData/property").then(response => response.json()).then(data => {
-	const property = document.getElementById("propertyRows");
+	const property = document.getElementById("rowData");
 	data.result.forEach(row => {
 		const add = row.Door + ", " + row.Street + ", " + row.city + ", " + row.state;
 		let start = row.start_date.slice(0, 10).replace('T', ' ');

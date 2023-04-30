@@ -214,10 +214,18 @@ app.get('/getData/property', async (req, res) => {
 })
 
 app.get('/setData/users', async (req, res) => {
-	db.query("CALL addUser", (error, result) => {
-		return res.status(200).redirect("/");
-	})
-})
+	const { name, ph, pass, age, door, street, city, pin, state, role, aadhar } = req.body;
+	db.query("CALL add_final_user(?,?,?,?,?,?,?,?,?,?,?)",
+		[name, ph, pass, age, door, street, city, pin, state, role, aadhar],
+		(error, result) => {
+			if (error) {
+				console.log(error);
+				return res.status(500).send("Internal Server Error");
+			}
+			console.log(result);
+			return res.status(200).redirect("/");
+		})
+});
 
 //uid function
 async function getUID(req, res) {
