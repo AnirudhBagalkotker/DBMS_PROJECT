@@ -109,7 +109,7 @@ DROP TABLE IF EXISTS `PROPERTY`;
 CREATE TABLE `PROPERTY` (
   `PID` int(11) NOT NULL AUTO_INCREMENT,
   `Owner_UID` int(11) NOT NULL,
-  `Available` int(11) NOT NULL,
+  `Available` int(1) NOT NULL,
   `facilities` varchar(150) NOT NULL,
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
