@@ -16,18 +16,18 @@
 	<h1 class="m-3 text-center">Add User</h1>
 
 	<section id="addUserForm" class="m-auto mt-5 w-50 mb-5">
-		<form>
+		<form action="/setData/users" method="POST">
 			<div class="mb-3">
 				<label for="usernameField" class="form-label">Name</label>
-				<input type="text" class="form-control" id="usernameField" name="usernameField">
+				<input type="text" class="form-control" id="usernameField" name="usernameField" required>
 			</div>
 			<div class="mb-3">
 				<label for="phoneField" class="form-label">Phone Number</label>
-				<input type="number" class="form-control" id="phoneField" name="phoneField">
+				<input type="number" class="form-control" id="phoneField" name="phoneField" required>
 			</div>
 			<div class="mb-3">
 				<label for="passwordField" class="form-label">Password</label>
-				<input type="password" class="form-control" id="passwordField" name="passwordField">
+				<input type="password" class="form-control" id="passwordField" name="passwordField" required>
 			</div>
 			<div class="mb-3">
 				<label class="form-label" for="ageField">Age</label>
@@ -55,10 +55,10 @@
 			</div>
 			<div class="mb-3">
 				<label class="form-label" for="roleField">Role</label>
-				<input type="number" id="roleField" name="roleField" class="form-control" />
+				<input type="number" id="roleField" name="roleField" class="form-control" required />
 			</div>
 			<div class="mb-3">
-				<label for="usernameField" class="form-label">Aadhar</label>
+				<label for="aadharField" class="form-label">Aadhar</label>
 				<input type="text" class="form-control" id="aadharField" name="aadharField">
 			</div>
 			<button type="submit" class="btn btn-primary" id="loginBtn">Save</button>
