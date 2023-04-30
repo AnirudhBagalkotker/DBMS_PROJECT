@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Property Rental Agency Application | Rental Page</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+</head>
+
+<body>
+
+	<section id="nav"></section>
+
+	<section id="rentals" class="m-3 w-100">
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">RID</th>
+					<th scope="col">Tenant</th>
+					<th scope="col">Tenant Name</th>
+					<th scope="col">Property</th>
+					<th scope="col">Start Date</th>
+					<th scope="col">End Date</th>
+					<th scope="col">Rent</th>
+					<th scope="col">Hike</th>
+					<th scope="col">Commission</th>
+					<th scope="col">Bhk</th>
+					<th scope="col">Floors</th>
+				</tr>
+			</thead>
+			<tbody id="rowData">
+				<div id="addRentalTableRow">
+					<form>
+						<tr>
+							<th scope="col"><input type="number" class="form-control w-100" id="addridField"
+									name="owneruidField"></th>
+							<th scope="col"><input type="number" class="form-control w-100" id="addtenantField"
+									name="tenantField"></th>
+							<th scope="col"><input type="number" class="form-control w-100" id="addtenantNameField"
+								name="tenantNameField"></th>
+							<th scope="col"><input type="text" class="form-control w-100" id="addpropertyField"
+									name="propertyField"></th>
+							<th scope="col"><input type="date" class="form-control w-auto" id="addstartdateField"
+									name="startdateField"></th>
+							<th scope="col"><input type="date" class="form-control w-auto" id="addenddateField"
+									name="enddateField"></th>
+							<th scope="col"><input type="number" class="form-control w-100" id="addrentField"
+									name="rentField"></th>
+							<th scope="col"><input type="number" class="form-control w-100" id="addhikeField"
+									name="hikeField"></th>
+							<th scope="col"><input type="number" class="form-control w-100" id="addcommissionField"
+								name="commissionField"></th>
+							<th scope="col"><input type="number" class="form-control w-100" id="addbhkField"
+								name="bhkField"></th>
+							<th scope="col"><input type="number" class="form-control w-100" id="addfloorsField"
+								name="floorsField"></th>
+							<th scope="col"><button class="btn btn-primary m-0" type="button" id="addsaveButton">
+									Save
+								</button></th>
+							<th scope="col"><button class="btn btn-danger m-0" type="button" id="addclearButton">
+									Clear
+								</button></th>
+						</tr>
+					</form>
+				</div>
+
+				
+				<div id="propertytablerow">
+					<tr>
+						<th scope="col">2</th>
+						<th scope="col">3</th>
+						<th scope="col">Test Name</th>
+						<th scope="col">Test Property</th>
+						<th scope="col">13/1/2003</th>
+						<th scope="col">12/12/2004</th>
+						<th scope="col">420</th>
+						<th scope="col">12</th>
+						<th scope="col">1000</th>
+						<th scope="col">20</th>
+						<th scope="col">4</th>
+						<th scope="col"><button class="btn btn-primary m-0" type="button" data-bs-toggle="collapse"
+								data-bs-target="#collapseExample" aria-expanded="false"
+								aria-controls="collapseExample" id="editButton">
+								Edit
+							</button></th>
+						<th scope="col"><button class="btn btn-danger m-0" type="button" aria-expanded="false"
+								aria-controls="collapseExample" id="deleteButton">
+								Delete
+							</button></th>
+					</tr>
+					<form>
+						<tr class="collapse" id="collapseExample">
+							<th scope="col"><input type="number" class="form-control w-100" id="owneruidField"
+									name="owneruidField"></th>
+							<th scope="col"><input type="number" class="form-control w-100" id="tenantField"
+									name="availibilityField"></th>
+							<th scope="col"><input type="number" class="form-control w-100" id="tenantNameField"
+								name="tenantNameField"></th>
+							<th scope="col"><input type="text" class="form-control w-auto" id="propertyField"
+									name="facilitiesField"></th>
+							<th scope="col"><input type="date" class="form-control w-auto" id="startdateField"
+									name="startdateField"></th>
+							<th scope="col"><input type="date" class="form-control w-auto" id="enddateField"
+									name="enddateField"></th>
+							<th scope="col"><input type="number" class="form-control w-100" id="rentField"
+									name="rentField"></th>
+							<th scope="col"><input type="number" class="form-control w-100" id="hikeField"
+									name="hikeField"></th>
+							<th scope="col"><input type="number" class="form-control w-100" id="commissionField"
+									name="commissionField"></th>
+							<th scope="col"><input type="number" class="form-control w-100" id="bhkField"
+								name="bhkField"></th>
+							<th scope="col"><input type="number" class="form-control w-100" id="floorsField"
+								name="floorsField"></th>
+							<th scope="col"><button class="btn btn-primary m-0" type="button" aria-expanded="false"
+									aria-controls="collapseExample" id="saveButton">
+									Save
+								</button></th>
+						</tr>
+					</form>
+				</div>
+			</tbody>
+		</table>
+	</section>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+		crossorigin="anonymous"></script>
+	<script src="/js/nav.js"></script>
+</body>
+
+</html>
