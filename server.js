@@ -96,7 +96,7 @@ app.post('/auth/login', async (req, res) => {
 					if (pass == password) {
 						const name = resu[0].name;
 						const role = resu[0].role;
-						const token = jwt.sign({ id: uid, name: name }, process.env.JWT_SECRET, {
+						const token = jwt.sign({ id: uid, name: name, role: role }, process.env.JWT_SECRET, {
 							expiresIn: process.env.JWT_EXPIRES_IN,
 						});
 						// console.log("The Token is " + token);
@@ -156,8 +156,10 @@ app.get(["/profile", "/", "/home"], (req, res) => {
 });
 
 //adduser screen
-app.get("/adduser", (req, res) => {
-	if (getUID(req, res)) {
+app.get("/adduser", async (req, res) => {
+	const role = await getRole(req, res);
+	// console.log(role);
+	if (role == 0) {
 		res.sendFile(path.join(staticPath, "../views/adduser.html"));
 	}
 	else {
@@ -166,8 +168,9 @@ app.get("/adduser", (req, res) => {
 });
 
 //report screen
-app.get("/report", (req, res) => {
-	if (getUID(req, res)) {
+app.get("/report", async (req, res) => {
+	const role = await getRole(req, res);
+	if (role == 0 || role == 1) {
 		res.sendFile(path.join(staticPath, "../views/report.html"));
 	}
 	else {
@@ -231,12 +234,21 @@ async function getUID(req, res) {
 };
 
 async function getRole(req, res) {
-	const uid = getUID(req, res);
-	db.query("select role from USER where UID=?", [uid], (error, result) => {
-		role = result[0].role;
-		db.query("SELECT RoleName FROM ROLE WHERE RoleId=?", [role], (error, result) => {
-			const roleName = result[0].RoleName;
-			return res.json({ roleName });
-		})
-	})
+	if (req.cookies.log) {
+		// console.log(req.cookies.log);
+		try {
+			const decode = await promisify(jwt.verify)(
+				req.cookies.log,
+				process.env.JWT_SECRET
+			);
+			const RoleId = decode.role;
+			// console.log(RoleId);
+			return RoleId;
+		} catch (error) {
+			console.log(error);
+			res.status(200).redirect('/login');
+		}
+	} else {
+		res.status(200).redirect('/login');
+	}
 }
