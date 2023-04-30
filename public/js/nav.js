@@ -12,7 +12,10 @@ function createNav() {
 					<a class="nav-link" aria-current="page" href="/profile">Home</a>
 				</li>
 				<li class="nav-item property">
-					<a class="nav-link" href="/property">Add Property</a>
+					<a class="nav-link" href="/property">Properties</a>
+				</li>
+				<li class="nav-item property">
+					<a class="nav-link" href="/addproperty">Add Property</a>
 				</li>
 				<li class="nav-item rental">
 					<a class="nav-link" href="/rentals">Rentals</a>
