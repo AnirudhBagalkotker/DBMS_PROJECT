@@ -16,13 +16,13 @@
 	<h1 class="m-3 text-center">PROPERTIES</h1>
 
 	<section id="addPropertyForm" class="m-auto mt-5 mb-5 w-auto text-center">
-		<section id="rentals" class="m-3 w-auto">
+		<section id="rentals">
 			<table class="table">
 				<thead>
 					<tr>
 						<th scope="col">Owner</th>
 						<th scope="col">Availability</th>
-						<th scope="col">Facilities</th>
+						<th scope="col">Property</th>
 						<th scope="col">Start Date</th>
 						<th scope="col">End Date</th>
 						<th scope="col">Rent</th>
@@ -38,71 +38,7 @@
 						<th scope="col"></th>
 					</tr>
 				</thead>
-				<tbody id="rowData">
-					<div id="propertytablerow">
-						<tr>
-							<th scope="col">2</th>
-							<th scope="col">3</th>
-							<th scope="col">Facilities</th>
-							<th scope="col">13/1/2003</th>
-							<th scope="col">12/12/2004</th>
-							<th scope="col">420</th>
-							<th scope="col">12</th>
-							<th scope="col">1000</th>
-							<th scope="col">12</th>
-							<th scope="col">2</th>
-							<th scope="col">4</th>
-							<th scope="col">1</th>
-							<th scope="col">4</th>
-							<th scope="col">1</th>
-							<th scope="col"><button class="btn btn-primary m-0" type="button" data-bs-toggle="collapse"
-									data-bs-target="#collapseExample" aria-expanded="false"
-									aria-controls="collapseExample" id="editButton">
-									Edit
-								</button></th>
-							<th scope="col"><button class="btn btn-danger m-0" type="button" aria-expanded="false"
-									aria-controls="collapseExample" id="deleteButton">
-									Delete
-								</button></th>
-						</tr>
-						<form>
-							<tr class="collapse" id="collapseExample">
-								<th scope="col"><input type="number" class="form-control w-100" id="owneruidField"
-										name="owneruidField"></th>
-								<th scope="col"><input type="number" class="form-control w-100" id="availibilityField"
-										name="availibilityField"></th>
-								<th scope="col"><input type="text" class="form-control w-auto" id="facilitiesField"
-										name="facilitiesField"></th>
-								<th scope="col"><input type="date" class="form-control w-auto" id="startdateField"
-										name="startdateField"></th>
-								<th scope="col"><input type="date" class="form-control w-auto" id="enddateField"
-										name="enddateField"></th>
-								<th scope="col"><input type="number" class="form-control w-100" id="rentField"
-										name="rentField"></th>
-								<th scope="col"><input type="number" class="form-control w-100" id="hikeField"
-										name="hikeField"></th>
-								<th scope="col"><input type="number" class="form-control w-100" id="areaField"
-										name="areaField"></th>
-								<th scope="col"><input type="number" class="form-control w-100" id="plinthField"
-										name="plinthField"></th>
-								<th scope="col"><input type="number" class="form-control w-100" id="constructionField"
-										name="constructionField"></th>
-								<th scope="col"><input type="number" class="form-control w-100" id="floorsField"
-										name="floorsField"></th>
-								<th scope="col"><input type="number" class="form-control w-100" id="typeField"
-										name="typeField"></th>
-								<th scope="col"><input type="number" class="form-control w-100" id="bhkField"
-										name="bhkField"></th>
-								<th scope="col"><input type="number" class="form-control w-100" id="addressField"
-										name="addressField"></th>
-								<th scope="col"><button class="btn btn-primary m-0" type="saveButton"
-										aria-expanded="false" aria-controls="collapseExample">
-										Save
-									</button></th>
-							</tr>
-						</form>
-					</div>
-				</tbody>
+				<tbody id="rowData"></tbody>
 			</table>
 		</section>
 	</section>
@@ -113,6 +49,7 @@
 		integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
 		crossorigin="anonymous"></script>
 	<script src="/js/nav.js"></script>
+	<script src="/js/property.js"></script>
 </body>
 
 </html>

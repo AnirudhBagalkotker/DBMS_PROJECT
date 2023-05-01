@@ -13,17 +13,14 @@ const app = express();
 
 //middlewares
 app.use(cookieParser());
-app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // declare static path
 let staticPath = path.join(__dirname, "public");
 app.use(express.static(staticPath));
-express().use(bodyParser.urlencoded({
-	extended: true
-}));
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // dotenv config
 dotenv.config({ path: './.env' });
@@ -136,8 +133,10 @@ app.get("/rentals", (req, res) => {
 });
 
 //Property screen
-app.get("/property", (req, res) => {
-	if (getUID(req, res)) {
+app.get("/property", async (req, res) => {
+	const role = await getRole(req, res);
+	// console.log(role);
+	if (role != 3) {
 		res.sendFile(path.join(staticPath, "../views/property.html"));
 	}
 	else {
@@ -169,9 +168,7 @@ app.get("/adduser", async (req, res) => {
 
 //addproperty screen
 app.get("/addproperty", async (req, res) => {
-	const role = await getRole(req, res);
-	// console.log(role);
-	if (role == 0) {
+	if (getUID(req, res)) {
 		res.sendFile(path.join(staticPath, "../views/addproperty.html"));
 	}
 	else {
@@ -220,9 +217,17 @@ app.get('/getData/profile', async (req, res) => {
 
 app.get('/getData/property', async (req, res) => {
 	const uid = await getUID(req, res);
-	db.query("SELECT * FROM PROPERTY, ADDRESS WHERE PROPERTY.Address = ADDRESS.AID and Owner_UID=?", [uid], (error, result) => {
-		return res.json({ result });
-	})
+	const role = await getRole(req, res);
+	if (role <= 1) {
+		db.query("SELECT * FROM PROPERTY, ADDRESS WHERE PROPERTY.Address = ADDRESS.AID", (error, result) => {
+			return res.json({ result });
+		})
+	}
+	else {
+		db.query("SELECT * FROM PROPERTY, ADDRESS WHERE PROPERTY.Address = ADDRESS.AID and Owner_UID=?", [uid], (error, result) => {
+			return res.json({ result });
+		})
+	}
 })
 
 app.get('/getData/rented', async (req, res) => {
@@ -232,6 +237,18 @@ app.get('/getData/rented', async (req, res) => {
 	})
 })
 
+app.post('/getData/report', async (req, res) => {
+	const pid = req.body.prop;
+	console.log(pid);
+	db.query("SELECT * FROM RENT R LEFT JOIN RENT_HISTORY RH ON R.RID = RH.RID WHERE Property = ?", [pid], (error, result) => {
+		if (error) {
+			return res.status(500).json({ error });
+		}
+		return res.json({ result });
+	})
+});
+
+
 app.get('/getData/rentals', async (req, res) => {
 	// const uid = await getUID(req, res);
 	db.query("SELECT * FROM PROPERTY P, ADDRESS A WHERE Available = 1 and P.Address = A.AID", (error, result) => {
@@ -239,8 +256,9 @@ app.get('/getData/rentals', async (req, res) => {
 	})
 })
 
-app.get('/setData/users', async (req, res) => {
-	const { name, ph, pass, age, door, street, city, pin, state, role, aadhar } = req.body;
+app.post('/setData/users', async (req, res) => {
+	const { usernameField: name, phoneField: ph, passwordField: pass, ageField: age, DoorField: door, StreetField: street, CityField: city, PinField: pin, StateField: state, roleField: role, aadharField: aadhar } = req.body;
+	// console.log({ name, ph, pass, age, door, street, city, pin, state, role, aadhar });
 	db.query("CALL add_full_user(?,?,?,?,?,?,?,?,?,?,?)",
 		[name, pass, age, door, street, city, pin, state, role, aadhar, ph],
 		(error, result) => {
@@ -248,27 +266,27 @@ app.get('/setData/users', async (req, res) => {
 				console.log(error);
 				return res.status(500).send("Internal Server Error");
 			}
-			console.log(result);
+			// console.log(result);
 			return res.status(200).redirect("/");
 		})
 });
 
-app.get('/setData/property', async (req, res) => {
-	const uid = getUID(req, res);
-	const { name, ph, pass, age, door, street, city, pin, state, role, aadhar } = req.body;
-	db.query("SELECT * FROM ADDRESS WHERE AID=?", [aid], (error, result) => {
-
-		db.query("CALL add_full_user(?,?,?,?,?,?,?,?,?,?,?)",
-			[uid, avail, fac, st_date, en_date, rent, hike, area, plinth, constr, floors, type, bhk, door, street, city, pin, state],
-			(error, result) => {
-				if (error) {
-					console.log(error);
-					return res.status(500).send("Internal Server Error");
-				}
-				console.log(result);
-				return res.status(200).redirect("/");
-			})
-	})
+app.post('/setData/property', async (req, res) => {
+	const uid = await getUID(req, res);
+	// console.log(uid);
+	let { DoorField, StreetField, CityField, PinField, StateField, facilitiesField, rentField, stdateField, enddateField, hikeField, areaField, plinthField, ConstructionField, floorsField, typeField, bhkField } = req.body;
+	const st_date = stdateField;
+	const en_date = enddateField;
+	db.query("CALL add_full_property(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+		[uid, 1, facilitiesField, st_date, en_date, parseInt(rentField), parseInt(hikeField), parseInt(areaField), parseInt(plinthField), ConstructionField, parseInt(floorsField), parseInt(typeField), parseInt(bhkField), DoorField, StreetField, CityField, parseInt(PinField), StateField],
+		(error, result) => {
+			if (error) {
+				console.log(error);
+				return res.status(500).send("Internal Server Error");
+			}
+			// console.log(result);
+			return res.status(200).redirect("/");
+		})
 });
 
 //uid function

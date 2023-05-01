@@ -16,10 +16,10 @@
     <h1 class="m-3 text-center">Add Property</h1>
 
     <section id="addUserForm" class="m-auto mt-5 w-50 mb-5">
-        <form>
+        <form action="/setData/property" method="POST">
             <div class="mb-3">
                 <label for="DoorField" class="form-label">Door</label>
-                <input type="number" class="form-control" id="DoorField" name="DoorField">
+                <input type="text" class="form-control" id="DoorField" name="DoorField">
             </div>
             <div class="mb-3">
                 <label for="StreetField" class="form-label">Street</label>
@@ -31,7 +31,7 @@
             </div>
             <div class="mb-3">
                 <label for="PinField" class="form-label">Pin</label>
-                <input type="text" class="form-control" id="PinField" name="PinField">
+                <input type="number" class="form-control" id="PinField" name="PinField">
             </div>
             <div class="mb-3">
                 <label for="StateField" class="form-label">State</label>
@@ -39,11 +39,11 @@
             </div>
             <div class="mb-3">
                 <label class="form-label" for="facilitiesField">Facilities</label>
-                <textarea class="form-control" id="facilitiesField" name="facilitiesField" rows="4"></textarea>
+                <textarea class="form-control" id="facilitiesField" name="facilitiesField" rows="2"></textarea>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="rentField">Rent</label>
-                <input type="number" id="rentField" name ="rentField" class="form-control form-icon-trailing" />
+                <input type="number" id="rentField" name="rentField" class="form-control form-icon-trailing" />
             </div>
             <div class="mb-3">
                 <label class="form-label" for="stdateField">Start Date</label>
@@ -67,7 +67,8 @@
             </div>
             <div class="mb-3">
                 <label class="form-label" for="ConstructionField">Construction</label>
-                <input type="date" id="ConstructionField" name="ConstructionField" class="form-control form-icon-trailing" />
+                <input type="date" id="ConstructionField" name="ConstructionField"
+                    class="form-control form-icon-trailing" />
             </div>
             <div class="mb-3">
                 <label class="form-label" for="floorsField">Floors</label>
