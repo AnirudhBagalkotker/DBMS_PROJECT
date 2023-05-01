@@ -7,7 +7,7 @@ fetch("/getData/rentals").then(response => response.json()).then(data => {
         let constr = row.construction.slice(0, 10).replace('T', ' ');
         console.log(add);
         property.innerHTML += `
-        <tr>
+        <tr id="row_${row.PID}">
             <th scope="col" id="ownerField_${row.PID}">${row.Owner_UID}</th>
             <th scope="col" id="propertyField_${row.PID}">${row.PID}</th>
             <th scope="col" id="startdateField_${row.PID}">${start_date}</th>
@@ -21,7 +21,7 @@ fetch("/getData/rentals").then(response => response.json()).then(data => {
             <th scope="col" id="typeField_${row.PID}">${row.Type}</th>
             <th scope="col" id="floorsField_${row.PID}">${row.floors}</th>
             <th scope="col" id="bhkField_${row.PID}">${row.bhk}</th>
-            <th scope="col"><button class="btn btn-primary m-0" type="button" id="rentButton_${row.PID}" onclick="rentout()">
+            <th scope="col"><button class="btn btn-primary m-0" type="button" id="rentButton_${row.PID}" onclick="rentout(${row.PID})">
             Rent
             </button></th>
         </tr>
@@ -29,3 +29,17 @@ fetch("/getData/rentals").then(response => response.json()).then(data => {
     });
 })
 
+async function rentout(PID) {
+    let response = await fetch('/setData/rentout', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            prop: PID,
+        })
+    })
+
+    let withdrawResponse = await response.json();
+    console.log(withdrawResponse);
+}

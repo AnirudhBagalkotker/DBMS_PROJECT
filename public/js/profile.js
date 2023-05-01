@@ -40,7 +40,7 @@ fetch("/getData/rented").then(response => response.json()).then(data => {
 		let start = row.start_date.slice(0, 10).replace('T', ' ');
 		let end = row.end_date.slice(0, 10).replace('T', ' ');
 		let available = "NO";
-		property.innerHTML += `<th scope="row">RENT</th>
+		property.innerHTML += `<th scope="row">Rent</th>
 		<td>${add}</td>
 		<td>${available}</td>
 		<td>${row.rent}</td>

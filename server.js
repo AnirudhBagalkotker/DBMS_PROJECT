@@ -289,6 +289,19 @@ app.post('/setData/property', async (req, res) => {
 		})
 });
 
+app.post('/setData/rentout', async (req, res) => {
+	const uid = await getUID(req, res);
+	let pid = req.body.prop;
+	db.query("CALL add_rental(?,?,?)", [uid, pid, 15], (error, result) => {
+		if (error) {
+			console.log(error);
+			return res.status(500).send("Internal Server Error");
+		}
+		// console.log(result);
+		return res.status(200).redirect("/");
+	})
+});
+
 //uid function
 async function getUID(req, res) {
 	if (req.cookies.log) {
