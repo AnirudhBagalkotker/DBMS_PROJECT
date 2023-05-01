@@ -167,6 +167,18 @@ app.get("/adduser", async (req, res) => {
 	}
 });
 
+//addproperty screen
+app.get("/addproperty", async (req, res) => {
+	const role = await getRole(req, res);
+	// console.log(role);
+	if (role == 0) {
+		res.sendFile(path.join(staticPath, "../views/addproperty.html"));
+	}
+	else {
+		res.status(200).redirect("/login");
+	}
+});
+
 //report screen
 app.get("/report", async (req, res) => {
 	const role = await getRole(req, res);

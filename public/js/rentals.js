@@ -11,7 +11,7 @@ fetch("/getData/rentals").then(response => response.json()).then(data => {
                 <th scope="col" id="enddateField_${row.PID}">${end_date}</th>
                 <th scope="col" id="rentField_${row.PID}">${row.rent}</th>
                 <th scope="col" id="hikeField_${row.PID}">${row.hike}</th>
-                <th scope="col" id="areaField_${row.PID}">${row.}</th>
+                <th scope="col" id="areaField_${row.PID}">${row.area}</th>
                 <th scope="col" id="plinthField_${row.PID}">${row.}</th>
                 <th scope="col" id="constructionField_${row.PID}">${row.}</th>
                 <th scope="col" id="addressField_${row.PID}">${add}</th>
