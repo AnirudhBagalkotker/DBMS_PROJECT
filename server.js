@@ -213,6 +213,20 @@ app.get('/getData/property', async (req, res) => {
 	})
 })
 
+app.get('/getData/rented', async (req, res) => {
+	const uid = await getUID(req, res);
+	db.query("SELECT * FROM RENT R, RENT_HISTORY RH, PROPERTY P, ADDRESS A WHERE R.Tenant=? and R.RID = RH.RID and R.Property = P.PID and P.Address = A.AID", [uid], (error, result) => {
+		return res.json({ result });
+	})
+})
+
+app.get('/getData/rentals', async (req, res) => {
+	// const uid = await getUID(req, res);
+	db.query("SELECT * FROM PROPERTY P, ADDRESS A WHERE Available = 1 and P.Address = A.AID", (error, result) => {
+		return res.json({ result });
+	})
+})
+
 app.get('/setData/users', async (req, res) => {
 	const { name, ph, pass, age, door, street, city, pin, state, role, aadhar } = req.body;
 	db.query("CALL add_full_user(?,?,?,?,?,?,?,?,?,?,?)",
