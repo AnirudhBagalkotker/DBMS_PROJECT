@@ -22,6 +22,12 @@ git clone https://github.com/AnirudhBagalkotker/DBMS_PROJECT.git
 2. Import SQL
 Open the main.sql file in MySQL Workbench and then Run the SQL Code.
 
+You can add some more users by providing necessary attributes and directly by ececuting:
+
+```
+CALL add_full_user();
+```
+
 3. Install Node Modules
 Open the Terminal in the directory and execute the command
 
