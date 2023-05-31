@@ -9,7 +9,7 @@ fetch("/getData/profile")
 		document.getElementById("phone").innerHTML = data.phone;
 	})
 
-fetch("/getData/property").then(response => response.json()).then(data => {
+fetch("/getData/myproperty").then(response => response.json()).then(data => {
 	const property = document.getElementById("propertyRows");
 	data.result.forEach(row => {
 		const add = row.Door + ", " + row.Street + ", " + row.city + ", " + row.state;

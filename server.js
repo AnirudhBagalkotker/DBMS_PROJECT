@@ -230,6 +230,13 @@ app.get('/getData/property', async (req, res) => {
 	}
 })
 
+app.get('/getData/myproperty', async (req, res) => {
+	const uid = await getUID(req, res);
+	db.query("SELECT * FROM PROPERTY, ADDRESS WHERE PROPERTY.Address = ADDRESS.AID and Owner_UID=?", [uid], (error, result) => {
+		return res.json({ result });
+	})
+})
+
 app.get('/getData/rented', async (req, res) => {
 	const uid = await getUID(req, res);
 	db.query("SELECT * FROM RENT R, RENT_HISTORY RH, PROPERTY P, ADDRESS A WHERE R.Tenant=? and R.RID = RH.RID and R.Property = P.PID and P.Address = A.AID", [uid], (error, result) => {
@@ -301,6 +308,33 @@ app.post('/setData/rentout', async (req, res) => {
 		return res.status(200).redirect("/");
 	})
 });
+
+// app.post('/editData/property', async (req, res) => {
+// 	const uid = await getUID(req, res);
+// 	let { DoorField, StreetField, CityField, PinField, StateField, facilitiesField, rentField, stdateField, enddateField, hikeField, areaField, plinthField, ConstructionField, floorsField, typeField, bhkField } = req.body;
+// 	const st_date = stdateField;
+// 	const en_date = enddateField;
+// 	db.query("CALL update_full_property(?,?,?,?,?,?,?,?,?,?,?,?,?)",  [pid,], (error, result) => {
+// 		if (error) {
+// 			console.log(error);
+// 			return res.status(500).send("Internal Server Error");
+// 		}
+// 		// console.log(result);
+// 		return res.status(200).redirect("/");
+// 	})
+// });
+
+// app.post('/delData/property', async (req, res) => {
+// 	let pid = req.body.prop;
+// 	db.query("CALL delete_full_property(?)", [pid], (error, result) => {
+// 		if (error) {
+// 			console.log(error);
+// 			return res.status(500).send("Internal Server Error");
+// 		}
+// 		// console.log(result);
+// 		return res.status(200).redirect("/");
+// 	})
+// });
 
 //uid function
 async function getUID(req, res) {
