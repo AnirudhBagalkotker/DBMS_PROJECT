@@ -45,5 +45,5 @@ Now open a Browser and search
 http://localhost:3000/
 ```
 
-Access the DBA account by Username: 1234567890 and Password: root
+Access the DBA account by Username: 38913672 and Password: root
 
