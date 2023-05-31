@@ -42,7 +42,7 @@ npm start
 Now open a Browser and search
 
 ```
-localhost:3000
+http://localhost:3000/
 ```
 
 Access the DBA account by Username: 1234567890 and Password: root
