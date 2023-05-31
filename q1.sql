@@ -229,7 +229,6 @@ END //
 DELIMITER ;
 
 
-drop trigger avail_con;
 DELIMITER //
 CREATE TRIGGER avail_con
 AFTER INSERT ON RENT FOR EACH ROW
