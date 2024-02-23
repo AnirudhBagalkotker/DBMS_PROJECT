@@ -1,5 +1,5 @@
 # DBMS_PROJECT
-Property Rental Agency Application, Made using MySQL Database HTML,CSS,JS on the Frontend and Node.Js in the Backend
+Property Rental Agency Application, Made using MySQL Database with HTML, CSS, JS and BootStrap on the Frontend and Node.Js in the Backend
 
 ## SETUP INSTRUCTIONS
 
